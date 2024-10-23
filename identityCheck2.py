@@ -114,17 +114,17 @@ class NationalSSN:
     def getDateOfBirth(self) -> None:
         """Sets the value of dateOfBirth property for object
         """
+        # TODO: Onko järkeä hakea syntymäaikaa, jos hetu muuten virheellinen?
         if self.checkSsnLengthOk():
             isoDate = '1799-12-31'
             parts = self.splitSsn()
             centurySymbol = parts['century']
+
+            # TODO: Mitä jos symboli on väärä, sitähän ei huomioida järkevyystarkistuksessa -> kaatuu
             century = self.centuryCodes[centurySymbol]
             isoDate = century[0:2] + parts['years'] + '-' + parts['months'] + '-' + parts['days']
             self.dateOfBirth = isoDate
 
-    # Lasketaan ikä nyt täysinä vuosina    
-    def calculateAge(self):
-        pass
 
     # Selvitetään varmistussumman avulla onko HeTu syötetty oikein    
     def isValidSsn(self) -> bool:
@@ -146,13 +146,28 @@ class NationalSSN:
         else:
             return False
 
+    # Lasketaan ikä nyt täysinä vuosina    
+    def calculateAge(self):
+        pass
+        # Tarkistetaan ennen laskentaa, että henkilötunnus on oikein syötetty
+
+            # Muutetaan olion syntymäaikaominaisuuteen tallennettu ISO-päivämäärä Pyhton-päivämääräksi
+
+            # Haetaan nykyinen päivämäärä
+
+            # Lasketaan päivämäärien ero täysinä vuosina
+
+            # Palautetaan ikä vuosina
+
 # MAIN KOKEILUJA VARTEN (Poista, kun ei enää tarvita)
 # ===================================================
 
 if __name__ == "__main__":
     hetu1 = NationalSSN('130628-478N')
     hetu1.getDateOfBirth()
+    ika = hetu1.calculateAge()
     print('Oikein muodostettu:', hetu1.checkSsnLengthOk())
     print('HeTun osat ovat: ', hetu1.splitSsn())
     print('Syntymäaikaosa ISO-muodossa on ', hetu1.dateOfBirth)
     print('Henkilötunnus on oikein muodostettu', hetu1.isValidSsn())
+    print('Henkilön ikä on', ika)
