@@ -29,7 +29,6 @@ class NationalSSN:
         self.dateOfBirth = ''
         self.number = 0
         self.gender = ''
-        self.checkSum = ''
 
         # Sanakirjat vuosisatakoodeille ja varmisteille
         self.centuryCodes = {
@@ -150,11 +149,10 @@ class NationalSSN:
             parts = self.splitSsn()
             centurySymbol = parts['century']
 
-            # TODO: Mitä jos symboli on väärä, sitähän ei huomioida järkevyystarkistuksessa -> kaatuu
             try:
                 century = self.centuryCodes[centurySymbol]
             except:
-                raise ValueError('Vuosisata merkki virheellinen')
+                raise ValueError('Vuosisatamerkki virheellinen')
             
             isoDate = century[0:2] + parts['years'] + \
                 '-' + parts['months'] + '-' + parts['days']
@@ -177,7 +175,27 @@ class NationalSSN:
 
             # Palautetaan ikä vuosina
             return ageInYears
+    
+    # TODO: Metodi sukupuolen selvittämiseen sekä number- ja gender-ominaisuuden asettamiseen
+    def getGender(self):
 
+        # Tarkistetaan ensin, onko SSN oikein syötetty
+        if self.isValidSsn():
+
+            # Otetaan merkkijonosta järjestysnumero hyödyntämällä splitSSN-metodia
+            parts = self.splitSsn()
+
+            # Muutetaan luvuksi ja tallennetaan se ominaisuuden arvoksi
+            number = int(parts['number'])
+            self.number = number
+
+            # Selvitetään onko parillinen (tyttö) vai pariton (poika)
+            if number % 2 == 0:
+                self.gender = 'Nainen'
+            else:
+                self.gender = 'Mies'
+
+    
 # MAIN KOKEILUJA VARTEN (Poista, kun ei enää tarvita)
 # ===================================================
 
@@ -186,13 +204,13 @@ if __name__ == "__main__":
     try:
         hetu1 = NationalSSN('130728x478N')
         hetu1.checkSsnLengthOk()
-        hetu1.calculateAge()
+        hetu1.getDateOfBirth()
     except Exception as e:
         print('Tapahtui virhe:', e)
-    """
-    ika = hetu1.calculateAge()
-    print('Oikein muodostettu:', hetu1.checkSsnLengthOk())
+    
+
+    print('On oikean pituinen:', hetu1.checkSsnLengthOk())
+    print('Henkilötunnus on oikein muodostettu', hetu1.isValidSsn())
     print('HeTun osat ovat: ', hetu1.splitSsn())
     print('Syntymäaikaosa ISO-muodossa on ', hetu1.dateOfBirth)
-    print('Henkilötunnus on oikein muodostettu', hetu1.isValidSsn())
-    print('Henkilön ikä on', ika) """
+   
