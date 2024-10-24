@@ -139,6 +139,7 @@ class NationalSSN:
                 return False
         else:
             return False
+   
     # Muutetaan synytmäaikaosa ja vuosisata päivämääräksi
     def getDateOfBirth(self) -> None:
         """Sets the value of dateOfBirth property for object
@@ -176,7 +177,7 @@ class NationalSSN:
             # Palautetaan ikä vuosina
             return ageInYears
     
-    # TODO: Metodi sukupuolen selvittämiseen sekä number- ja gender-ominaisuuden asettamiseen
+    # Metodi sukupuolen selvittämiseen sekä number- ja gender-ominaisuuden asettamiseen
     def getGender(self):
 
         # Tarkistetaan ensin, onko SSN oikein syötetty
