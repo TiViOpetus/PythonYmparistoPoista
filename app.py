@@ -36,10 +36,12 @@ def askName(question: str) -> str:
 
 
 
+# Varmistetaan, ettei ohjelma käynnisty, kun se tuodaan toiseen moduuliin importilla
+# Ohjelma saa käynnistyä ainoastaa ajamalla app.py suoraan
 if __name__ == "__main__":
 
     # PÄÄOHJELMAN IKUINEN SILMUKKA
-    # ============================
+# ============================
     while True:
 
         # Alustetaan muuttujat tyhjiksi
@@ -89,3 +91,5 @@ if __name__ == "__main__":
         # Muutetaan vastaus isoiksi kirjaimiksi ja tarkistetaan onko vastaus K
         if wantToAbort.upper() == 'K':
             break # Poistutaan ikuisesta silmukasta
+
+
